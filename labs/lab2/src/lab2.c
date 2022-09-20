@@ -134,4 +134,24 @@ void fsm(){
         break;
     }
 }
+ISR(TIMER0_OVF_vect){
+    if(count == delay){
+        valid = 1;  // pasó tiempo necesario y se puede cambiar luz
+        blink++;   // cantidad de cambios de luz ++
+        count = 0;
+    } else{
+        count++;
+        valid = 0;  // no cambiar luz
+    }
+}
+ISR(INT0_vect){
+    if (state == LDPV){
+        button = 1;
+    }
+}
+ISR(INT1_vect){
+    if (state == LDPV){
+        button = 1;
+    }
+}
 
