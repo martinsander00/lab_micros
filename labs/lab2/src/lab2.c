@@ -75,7 +75,10 @@ void fsm(){
             blink = 0;
         }
         break;
+<<<<<<< HEAD
 
+=======
+>>>>>>> ecada6e6a3d8f82b2dacd2934585d24fcc3f3189
     case LDVD:      // STOP vehicular
         delay = 61;
         PORTB &= ~(1 << PB3);
@@ -86,6 +89,78 @@ void fsm(){
             nxt_state = LDPP;
         }
         break;
+<<<<<<< HEAD
+=======
+    case LDPV:      // Paso vehicular
+        PORTB |= (1 << PB3);
+        PORTB |= (1 << PB5)|(1 << PB7); // LDPD ON
+        PORTB &= ~(1 << PB1);  // LDVD OFF
+        delay = 610;
+        if (button == 1 && blink > 0){
+            nxt_state = PV_blink;
+            count = 0;
+            blink = 0;
+        } 
+        break;
+    case LDPP:      // Paso peatonal
+        delay = 610;
+        PORTB |= (1 << PB4)|(1 << PB6);
+        PORTB &= ~(1 << PB5);
+        PORTB &= ~(1 << PB7);  // LDPD OFF
+        if (blink == 1){
+            nxt_state = PP_blink;
+            count = 0;
+            blink = 0;
+        }
+        break;
+    case LDPD:
+        delay = 70;
+        PORTB &= ~(1 << PB4);
+        PORTB &= ~(1 << PB6);
+        PORTB |= (1 << PB5)|(1 << PB7); // Luz peaton en rojo
+        if (blink == 1){
+            nxt_state = LDPV;
+            count = 0;
+            blink = 0;
+        }
+        break;
+    case PP_blink:      // paso peatones apunto de terminar
+        delay = 30;
+        if (valid){
+            PORTB ^= (1 << PB4);
+            PORTB ^= (1 << PB6);
+        }
+        if (blink == 6){
+            nxt_state = LDPD;
+            count = 0;
+            blink = 0;
+        }
+        break;
+    default:
+        break;
+    }
+}
+ISR(TIMER0_OVF_vect){
+    if(count == delay){
+        valid = 1;  // pasó tiempo necesario y se puede cambiar luz
+        blink++;   // cantidad de cambios de luz ++
+        count = 0;
+    } else{
+        count++;
+        valid = 0;  // no cambiar luz
+    }
+}
+ISR(INT0_vect){
+    if (state == LDPV){
+        button = 1;
+    }
+}
+ISR(INT1_vect){
+    if (state == LDPV){
+        button = 1;
+    }
+}
+>>>>>>> ecada6e6a3d8f82b2dacd2934585d24fcc3f3189
 
     case LDPV:      // Paso vehicular
         PORTB |= (1 << PB3);
