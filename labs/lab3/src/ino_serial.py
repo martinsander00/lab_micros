@@ -9,7 +9,7 @@ data = ['', '', '', '']
 arduino = serial.Serial(port='/tmp/ttyS1')
 
 # Abrir file en write mode
-f = open('csvpy.csv', 'w', encoding='UTF8')
+f = open('incubadora_resultados.csv', 'w', encoding='UTF8')
 
 # Escribir en el csv
 writer = csv.writer(f)
