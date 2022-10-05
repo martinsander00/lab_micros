@@ -8,7 +8,7 @@
 #define RESIST_SERIE 10000
 #define TERMO A1
 #define R_ROOM 9980.47      // Termómetro en 25° C
-#define Kp 2               // gGanancia 
+#define Kp 2               // Ganancia 
 
 #include <math.h>
 
@@ -93,9 +93,9 @@ void loop() {
   display.clearDisplay(); // Resetea la pantalla
   display.setCursor(0,0);
   display.print("T op.: ");
+  display.println(setPoint);
   display.print("Humedad: ");
   display.println(humid);
-  display.println(setPoint);
   display.print("Control: ");
   display.println(salida);
   display.print("T sensed: ");
@@ -104,10 +104,10 @@ void loop() {
   
 
   // LEDs
-  if (temperatura <= 30){
+  if (temp <= 30){
     digitalWrite(2, HIGH);
   } else {digitalWrite(2, LOW);}
-  if (temperatura >= 42){
+  if (temp >= 42){
     digitalWrite(8, HIGH);
   } else {digitalWrite(8, LOW);}
 
