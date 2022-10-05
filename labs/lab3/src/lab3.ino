@@ -78,10 +78,10 @@ void loop() {
   delay(500);
  
   // Ec. Steinhard
-  float temp = 1.0/ROOM_T + (1.0/BETA)*log(r_termo/R_ROOM);
-  temp = 1/temp;
-  temperatura = temp - 273.15;
-  Serial.println(temperatura);
+  float temp_trans = 1.0/ROOM_T + (1.0/BETA)*log(r_termo/R_ROOM);
+  temp_trans = 1/temp_trans;
+  temp = temp_trans - 273.15;
+  Serial.println(temp);
   delay(500);
 
   // PID
@@ -93,14 +93,15 @@ void loop() {
   display.clearDisplay(); // Resetea la pantalla
   display.setCursor(0,0);
   display.print("T op.: ");
+  display.print("Humedad: ");
+  display.println(humid);
   display.println(setPoint);
   display.print("Control: ");
   display.println(salida);
   display.print("T sensed: ");
-  display.println(temperatura);
-  display.print("Humedad: ");
-  display.println(humid);
+  display.println(temp);
   display.display();
+  
 
   // LEDs
   if (temperatura <= 30){
